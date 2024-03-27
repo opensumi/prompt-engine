@@ -1,5 +1,5 @@
 # https://github.com/microsoft/prompt-engine/blob/main/examples/GeneralExample.js#L1
-above: |
+above: |-
   const { PromptEngine } = require("prompt-engine");
 
   const description = "I want to speak with a bot which replies in under 20 words each time";
@@ -11,7 +11,7 @@ above: |
 
   const 
 var: a
-below: |
+below: |-
   = new PromptEngine(description, examples, flowResetText, {
     modelConfig: {
       maxTokens: 512,

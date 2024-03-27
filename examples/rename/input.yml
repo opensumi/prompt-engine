@@ -1,6 +1,6 @@
 # source:
-above: |
+above: |-
 var: 
 expectedVar:
-below: |
+below: |-
 language:

@@ -8,6 +8,7 @@
     "fmt": "dprint fmt"
   },
   "dependencies": {
+    "js-toml": "^1.0.0",
     "nunjucks": "^3.2.4",
     "yaml": "^2.4.1"
   },

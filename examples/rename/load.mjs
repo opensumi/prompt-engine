@@ -8,15 +8,15 @@ const engine = new PromptEngine(`
 每段代码的文本是用 --- 进行包裹的。
 
 ---
-{{above | trim}}
+{{above}}
 ---
 
 ---
-{{var | trim}}
+{{var}}
 ---
 
 ---
-{{below | trim}}
+{{below}}
 ---
 
 代码使用到的语言是 {{language}}。

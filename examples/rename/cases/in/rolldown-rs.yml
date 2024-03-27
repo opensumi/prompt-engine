@@ -1,5 +1,5 @@
 # source: https://github.com/rolldown/rolldown/blob/main/crates/rolldown/src/chunk_graph.rs
-above: |
+above: |-
   use index_vec::IndexVec;
   use rolldown_common::{ChunkId, NormalModuleId};
 
@@ -9,7 +9,7 @@ above: |
   pub struct ChunkGraph {
     pub 
 var: a
-below: |
+below: |-
   : ChunksVec,
     pub module_to_chunk: IndexVec<NormalModuleId, Option<ChunkId>>,
   }

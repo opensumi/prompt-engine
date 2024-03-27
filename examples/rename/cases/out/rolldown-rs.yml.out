@@ -11,7 +11,7 @@ use super::chunk::ChunksVec;
 
 #[derive(Debug)]
 pub struct ChunkGraph {
-  pub
+  pub 
 ---
 
 ---

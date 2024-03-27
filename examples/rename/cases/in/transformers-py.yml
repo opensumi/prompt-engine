@@ -1,5 +1,5 @@
 # https://github.com/huggingface/transformers/blob/main/utils/check_dummies.py#L94
-above: |
+above: |-
   def read_init() -> Dict[str, List[str]]:
       """
       Read the init and extract backend-specific objects.
@@ -19,9 +19,10 @@ above: |
       # Go through the end of the file
       while line_index < len(lines):
           # If the line is an if is_backend_available, we grab all objects associated.
+          
 var: b
 expectedVar: backend
-below: |
+below: |-
   = find_backend(lines[line_index])
       if backend is not None:
           while not lines[line_index].startswith("    else:"):

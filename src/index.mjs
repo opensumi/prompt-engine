@@ -1,6 +1,8 @@
+import { load } from "js-toml";
 import fs from "node:fs/promises";
 import nunjunks from "nunjucks";
 import { parse } from "yaml";
+import { exists } from "./fse.mjs";
 
 export class PromptEngine {
   /**
@@ -22,11 +24,23 @@ export class PromptEngine {
   }
 
   async renderFile(filePath) {
-    if (filePath.endsWith(".yml")) {
-      const file = await fs.readFile(filePath, "utf-8");
-      const data = parse(file);
-      return this.render(data);
+    if (!await exists(filePath)) {
+      throw new Error("File not found");
     }
-    throw new Error("Unsupported file type");
+
+    const file = await fs.readFile(filePath, "utf-8");
+
+    let data;
+    if (filePath.endsWith(".yml")) {
+      data = parse(file);
+    } else if (filePath.endsWith(".json")) {
+      data = JSON.parse(file);
+    } else if (filePath.endsWith(".toml")) {
+      data = load(file);
+    } else {
+      throw new Error("Unsupported file type");
+    }
+
+    return this.render(data);
   }
 }
