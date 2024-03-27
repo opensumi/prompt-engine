@@ -5,6 +5,8 @@ import { parse } from "yaml";
 import { exists } from "./fse.mjs";
 
 export class PromptEngine {
+  actions = [];
+
   /**
    * @param {string} template
    */
@@ -19,8 +21,27 @@ export class PromptEngine {
     });
   }
 
+  buildPrompt() {
+    let prompt = this.template;
+    if (this.actions && this.actions.length > 0) {
+      let actionsPrompt = `执行这些步骤: \n`;
+      this.actions.forEach((action, idx) => {
+        actionsPrompt += `${idx + 1}. ${action}\n`;
+      });
+      prompt += actionsPrompt;
+    }
+
+    if (this.outputStyle) {
+      let outputPrompt = `\n请确保你的输出格式满足以下要求：\n${this.outputStyle}`;
+
+      prompt += outputPrompt;
+    }
+
+    return prompt;
+  }
+
   render(obj) {
-    return this.env.renderString(this.template, obj).trim();
+    return this.env.renderString(this.buildPrompt(), obj).trim();
   }
 
   async renderFile(filePath) {
@@ -42,5 +63,13 @@ export class PromptEngine {
     }
 
     return this.render(data);
+  }
+
+  addAction(action) {
+    this.actions.push(action);
+  }
+
+  setOutputStyle(style) {
+    this.outputStyle = style;
   }
 }

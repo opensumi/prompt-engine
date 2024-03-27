@@ -24,7 +24,7 @@ var: b
 expectedVar: backend
 below: |-
   = find_backend(lines[line_index])
-      if backend is not None:
+      if b is not None:
           while not lines[line_index].startswith("    else:"):
               line_index += 1
           line_index += 1
