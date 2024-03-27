@@ -1,0 +1,49 @@
+# https://github.com/huggingface/transformers/blob/main/utils/check_dummies.py#L94
+above: |
+  def read_init() -> Dict[str, List[str]]:
+      """
+      Read the init and extract backend-specific objects.
+
+      Returns:
+          Dict[str, List[str]]: A dictionary mapping backend name to the list of object names requiring that backend.
+      """
+      with open(os.path.join(PATH_TO_TRANSFORMERS, "__init__.py"), "r", encoding="utf-8", newline="\n") as f:
+          lines = f.readlines()
+
+      # Get to the point we do the actual imports for type checking
+      line_index = 0
+      while not lines[line_index].startswith("if TYPE_CHECKING"):
+          line_index += 1
+
+      backend_specific_objects = {}
+      # Go through the end of the file
+      while line_index < len(lines):
+          # If the line is an if is_backend_available, we grab all objects associated.
+var: backend
+below: |
+  = find_backend(lines[line_index])
+      if backend is not None:
+          while not lines[line_index].startswith("    else:"):
+              line_index += 1
+          line_index += 1
+
+          objects = []
+          # Until we unindent, add backend objects to the list
+          while len(lines[line_index]) <= 1 or lines[line_index].startswith(" " * 8):
+              line = lines[line_index]
+              single_line_import_search = _re_single_line_import.search(line)
+              if single_line_import_search is not None:
+                  # Single-line imports
+                  objects.extend(single_line_import_search.groups()[0].split(", "))
+              elif line.startswith(" " * 12):
+                  # Multiple-line imports (with 3 indent level)
+                  objects.append(line[12:-2])
+              line_index += 1
+
+          backend_specific_objects[backend] = objects
+      else:
+          line_index += 1
+
+  return backend_specific_objects
+
+language: python

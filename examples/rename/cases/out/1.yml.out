@@ -1,0 +1,62 @@
+我需要你的帮助，请帮我推荐 5 个指定变量的重命名候选项。
+
+我会以将代码分成三段发给你，第一段代码是该变量之前的上文，第二段是变量名，第三段是该变量的下文。
+每段代码的文本是用 --- 进行包裹的。
+
+---
+def read_init() -> Dict[str, List[str]]:
+    """
+    Read the init and extract backend-specific objects.
+
+    Returns:
+        Dict[str, List[str]]: A dictionary mapping backend name to the list of object names requiring that backend.
+    """
+    with open(os.path.join(PATH_TO_TRANSFORMERS, "__init__.py"), "r", encoding="utf-8", newline="\n") as f:
+        lines = f.readlines()
+
+    # Get to the point we do the actual imports for type checking
+    line_index = 0
+    while not lines[line_index].startswith("if TYPE_CHECKING"):
+        line_index += 1
+
+    backend_specific_objects = {}
+    # Go through the end of the file
+    while line_index < len(lines):
+        # If the line is an if is_backend_available, we grab all objects associated.
+---
+
+---
+backend
+---
+
+---
+= find_backend(lines[line_index])
+    if backend is not None:
+        while not lines[line_index].startswith("    else:"):
+            line_index += 1
+        line_index += 1
+
+        objects = []
+        # Until we unindent, add backend objects to the list
+        while len(lines[line_index]) <= 1 or lines[line_index].startswith(" " * 8):
+            line = lines[line_index]
+            single_line_import_search = _re_single_line_import.search(line)
+            if single_line_import_search is not None:
+                # Single-line imports
+                objects.extend(single_line_import_search.groups()[0].split(", "))
+            elif line.startswith(" " * 12):
+                # Multiple-line imports (with 3 indent level)
+                objects.append(line[12:-2])
+            line_index += 1
+
+        backend_specific_objects[backend] = objects
+    else:
+        line_index += 1
+
+return backend_specific_objects
+---
+
+代码使用到的语言是 python。
+请根据上下文以及代码的作用帮我推荐一下 backend 能替换成什么变量名，将结果放在代码块中（用 ``` 包裹），每行一个。
+不要输出序号，只需要输出变量名即可。
+新推荐的变量名要和这个变量名的风格保持一致，语言保持一致。
