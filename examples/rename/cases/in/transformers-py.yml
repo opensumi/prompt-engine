@@ -19,7 +19,8 @@ above: |
       # Go through the end of the file
       while line_index < len(lines):
           # If the line is an if is_backend_available, we grab all objects associated.
-var: backend
+var: b
+expectedVar: backend
 below: |
   = find_backend(lines[line_index])
       if backend is not None:
@@ -40,7 +41,7 @@ below: |
                   objects.append(line[12:-2])
               line_index += 1
 
-          backend_specific_objects[backend] = objects
+          backend_specific_objects[b] = objects
       else:
           line_index += 1
 

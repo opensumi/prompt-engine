@@ -1,5 +1,6 @@
 # source:
 above: |
 var: 
+expectedVar:
 below: |
 language:

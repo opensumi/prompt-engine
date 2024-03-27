@@ -1,0 +1,17 @@
+# source: https://github.com/rolldown/rolldown/blob/main/crates/rolldown/src/chunk_graph.rs
+above: |
+  use index_vec::IndexVec;
+  use rolldown_common::{ChunkId, NormalModuleId};
+
+  use super::chunk::ChunksVec;
+
+  #[derive(Debug)]
+  pub struct ChunkGraph {
+    pub 
+var: a
+below: |
+  : ChunksVec,
+    pub module_to_chunk: IndexVec<NormalModuleId, Option<ChunkId>>,
+  }
+language: rust
+expectedVar: chunks

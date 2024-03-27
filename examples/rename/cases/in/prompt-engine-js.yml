@@ -35,3 +35,4 @@ below: |
   console.log("PROMPT\n\n" + outputPrompt);
   console.log("PROMPT LENGTH: " + outputPrompt.length);
 language: javascript
+expectedVar: promptEngine

@@ -26,7 +26,7 @@ def read_init() -> Dict[str, List[str]]:
 ---
 
 ---
-backend
+b
 ---
 
 ---
@@ -49,7 +49,7 @@ backend
                 objects.append(line[12:-2])
             line_index += 1
 
-        backend_specific_objects[backend] = objects
+        backend_specific_objects[b] = objects
     else:
         line_index += 1
 
@@ -57,6 +57,6 @@ return backend_specific_objects
 ---
 
 代码使用到的语言是 python。
-请根据上下文以及代码的作用帮我推荐一下 backend 能替换成什么变量名，将结果放在代码块中（用 ``` 包裹），每行一个。
+请根据上下文以及代码的作用帮我推荐一下 b 能替换成什么变量名，将结果放在代码块中（用 ``` 包裹），每行一个。
 不要输出序号，只需要输出变量名即可。
 新推荐的变量名要和这个变量名的风格保持一致，语言保持一致。
