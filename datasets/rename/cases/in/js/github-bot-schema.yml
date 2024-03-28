@@ -1,0 +1,21 @@
+source: https://github.com/opensumi/github-bot/blob/main/scripts/generate-json-schemas-all.js#L30
+above: |-2
+  function createTypeSchema(type, name) {
+    const schema = generator.createSchema(type);
+    const schemaString = JSON.stringify(schema, null, 2);
+    const 
+var: output_path
+expectedVar: outputPath
+below: |-2
+   = path.resolve(
+      __dirname,
+      '../src/public/json-schemas',
+      `${name}.schema.json`,
+    );
+    ensureDirSync(output_path);
+    fs.writeFile(output_path, usePrettier(schemaString), (err) => {
+      if (err) throw err;
+    });
+  }
+language: typescript
+tags: style

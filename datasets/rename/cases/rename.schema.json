@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "above": {
+            "type": "string"
+        },
+        "var": {
+            "type": "string"
+        },
+        "expectedVar": {
+            "type": "string"
+        },
+        "tags": {
+            "type": "array"
+        }
+    }
+    
+}
