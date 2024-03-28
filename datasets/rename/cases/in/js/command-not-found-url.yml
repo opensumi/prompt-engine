@@ -1,0 +1,26 @@
+source: https://github.com/bytemain/command-not-found/blob/master/src/index.ts#L12
+above: |-
+  const { body } = await got.get<any>(
+    `https://command-not-found.com/${cmd}`,
+    {
+      hooks: {
+        beforeRedirect: [
+          (options, response) => {
+            let 
+var: a
+expectedVar: url
+below: |-2
+             = options.url;
+            if (
+              a.hostname === 'command-not-found.com' &&
+              a.pathname === '/'
+            ) {
+              // 被重定向了，说明查的这个命令不存在。
+              throw new RequestError('abort', { code: '-100' }, options);
+            }
+          },
+        ],
+      },
+    }
+  );
+language: typescript

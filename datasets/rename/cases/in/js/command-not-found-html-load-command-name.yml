@@ -1,0 +1,30 @@
+source: https://github.com/bytemain/command-not-found/blob/master/src/index.ts#L12
+above: |-2
+  const $ = cheerio.load(body);
+  spinner.succeed('fetching succeed.');
+
+  let 
+var: a
+expectedVar: commandName
+below: |-2
+  = $('.row-command-info > div > h2').text();
+  let commandDescription = $('.row-command-info > div > p').text();
+  let installList = $(
+    'div.col-install > div.card.card-install > div.card-body > dl > div'
+  );
+
+  console.log(chalk.blue('name: ') + a.trim());
+  console.log(chalk.blue('description: ') + commandDescription.trim());
+  installList
+    .toArray()
+    .slice(1)
+    .map((item) => {
+      const os = $(item).find('dt').contents().last().text().trim();
+
+      console.log(chalk.greenBright('- OS: ') + os);
+      console.log(
+        chalk.greenBright('  Command: ') +
+          $(item).find('dd > code').text().trim()
+      );
+    });
+language: typescript

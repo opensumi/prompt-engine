@@ -1,8 +1,8 @@
-import { load } from "js-toml";
+import { load as loadToml } from "js-toml";
 import fs from "node:fs/promises";
 import path from "node:path";
 import nunjunks from "nunjucks";
-import { parse } from "yaml";
+import { parse as parseYaml } from "yaml";
 import { exists } from "./fse.mjs";
 
 export class PromptEngine {
@@ -54,11 +54,11 @@ export class PromptEngine {
 
     let data;
     if (filePath.endsWith(".yml")) {
-      data = parse(file);
+      data = parseYaml(file);
     } else if (filePath.endsWith(".json")) {
       data = JSON.parse(file);
     } else if (filePath.endsWith(".toml")) {
-      data = load(file);
+      data = loadToml(file);
     } else {
       throw new Error("Unsupported file type");
     }

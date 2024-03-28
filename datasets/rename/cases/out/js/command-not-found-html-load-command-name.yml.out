@@ -1,0 +1,43 @@
+我需要你的帮助，请帮我推荐 5 个指定变量的重命名候选项。
+我希望这些新的变量名能更符合代码上下文、代码风格，更有意义。
+
+我会将代码分成三段发给你，每段代码用 --- 进行包裹。这些代码是一段 typescript 代码片段。
+第一段代码是该变量之前的上文，第二段是变量名，第三段是该变量的下文。
+
+---
+const $ = cheerio.load(body);
+spinner.succeed('fetching succeed.');
+
+let 
+---
+
+---
+a
+---
+
+---
+= $('.row-command-info > div > h2').text();
+let commandDescription = $('.row-command-info > div > p').text();
+let installList = $(
+  'div.col-install > div.card.card-install > div.card-body > dl > div'
+);
+
+console.log(chalk.blue('name: ') + a.trim());
+console.log(chalk.blue('description: ') + commandDescription.trim());
+installList
+  .toArray()
+  .slice(1)
+  .map((item) => {
+    const os = $(item).find('dt').contents().last().text().trim();
+
+    console.log(chalk.greenBright('- OS: ') + os);
+    console.log(
+      chalk.greenBright('  Command: ') +
+        $(item).find('dd > code').text().trim()
+    );
+  });
+---
+
+
+你的任务是：
+请根据上下文以及代码的作用帮我推荐一下 a 能替换成哪些变量名，将结果放在代码块中（用 ``` 包裹），每行一个。
