@@ -1,4 +1,4 @@
-# https://github.com/microsoft/prompt-engine/blob/main/examples/GeneralExample.js#L1
+source: https://github.com/microsoft/prompt-engine/blob/main/examples/GeneralExample.js#L1
 above: |-
   const { PromptEngine } = require("prompt-engine");
 

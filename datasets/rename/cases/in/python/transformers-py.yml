@@ -1,4 +1,4 @@
-# https://github.com/huggingface/transformers/blob/main/utils/check_dummies.py#L94
+source: https://github.com/huggingface/transformers/blob/main/utils/check_dummies.py#L94
 above: |-
   def read_init() -> Dict[str, List[str]]:
       """

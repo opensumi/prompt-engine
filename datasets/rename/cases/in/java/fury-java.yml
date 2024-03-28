@@ -1,4 +1,4 @@
-# source: https://github.com/apache/incubator-fury/blob/main/java/fury-core/src/main/java/org/apache/fury/Fury.java#L215
+source: https://github.com/apache/incubator-fury/blob/main/java/fury-core/src/main/java/org/apache/fury/Fury.java#L215
 above: |-
   @Override
   public MemoryBuffer serialize(MemoryBuffer buffer, Object obj) {

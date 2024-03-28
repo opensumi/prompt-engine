@@ -1,5 +1,6 @@
 import { load } from "js-toml";
 import fs from "node:fs/promises";
+import path from "node:path";
 import nunjunks from "nunjucks";
 import { parse } from "yaml";
 import { exists } from "./fse.mjs";
@@ -63,6 +64,34 @@ export class PromptEngine {
     }
 
     return this.render(data);
+  }
+
+  async renderFolder(folderPath, outFolder, options) {
+    if (!await exists(folderPath)) {
+      throw new Error("Folder not found: " + folderPath);
+    }
+
+    if (await exists(outFolder)) {
+      if (options.clearOutput) {
+        await fs.rm(outFolder, { recursive: true });
+        await fs.mkdir(outFolder, { recursive: true });
+      }
+    } else {
+      await fs.mkdir(outFolder, { recursive: true });
+    }
+
+    const files = await fs.readdir(folderPath);
+
+    for (const file of files) {
+      const target = path.join(folderPath, file);
+      // check is a dir
+      if ((await fs.stat(target)).isDirectory()) {
+        await this.renderFolder(target, path.join(outFolder, file), options);
+      } else {
+        const result = await this.renderFile(target);
+        await fs.writeFile(path.join(outFolder, file + ".out"), result);
+      }
+    }
   }
 
   addAction(action) {
