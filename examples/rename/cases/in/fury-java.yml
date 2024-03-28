@@ -1,0 +1,56 @@
+# source: https://github.com/apache/incubator-fury/blob/main/java/fury-core/src/main/java/org/apache/fury/Fury.java#L215
+above: |-
+  @Override
+  public MemoryBuffer serialize(MemoryBuffer buffer, Object obj) {
+    return serialize(buffer, obj, null);
+  }
+
+  /** Serialize <code>obj</code> to a <code>buffer</code>. */
+  public MemoryBuffer serialize(MemoryBuffer buffer, Object obj, BufferCallback callback) {
+    this.bufferCallback = callback;
+    int 
+var: x
+expectedVar: maskIndex
+below: |-
+  = buffer.writerIndex();
+    // 1byte used for bit mask
+    buffer.ensure(x + 1);
+    buffer.writerIndex(x + 1);
+    byte bitmap = 0;
+    if (obj == null) {
+      bitmap |= isNilFlag;
+      buffer.put(x, bitmap);
+      return buffer;
+    }
+    // set endian.
+    if (isLittleEndian) {
+      bitmap |= isLittleEndianFlag;
+    }
+    if (language != Language.JAVA) {
+      // set reader as x_lang.
+      bitmap |= isCrossLanguageFlag;
+      // set writer language.
+      buffer.writeByte((byte) Language.JAVA.ordinal());
+    }
+    if (bufferCallback != null) {
+      bitmap |= isOutOfBandFlag;
+    }
+    buffer.put(x, bitmap);
+    try {
+      jitContext.lock();
+      checkDepthForSerialization();
+      if (language == Language.JAVA) {
+        write(buffer, obj);
+      } else {
+        xserializeInternal(buffer, obj);
+      }
+      return buffer;
+    } catch (StackOverflowError t) {
+      throw processStackOverflowError(t);
+    } finally {
+      resetWrite();
+      jitContext.unlock();
+    }
+  }
+
+language: java

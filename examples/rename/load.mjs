@@ -30,10 +30,12 @@ const engine = new PromptEngine(`
 // 你输出的结果需要每行一个候选项，不需要加序号，最后将整个结果用 \`\`\` 包裹。
 // `);
 
+await fs.rmdir("examples/rename/cases/out", { recursive: true });
+await fs.mkdir("examples/rename/cases/out", { recursive: true });
+
 const files = await fs.readdir("examples/rename/cases/in");
 for (const file of files) {
   const result = await engine.renderFile(`examples/rename/cases/in/${file}`);
   console.log(`🚀 ~ result:`, result);
-  await fs.mkdir("examples/rename/cases/out", { recursive: true });
   await fs.writeFile(`examples/rename/cases/out/${file}.out`, result);
 }
